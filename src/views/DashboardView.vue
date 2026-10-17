@@ -72,6 +72,18 @@
       </div>
     </div>
 
+    <div class="ai-section">
+        <div class="ai-header">
+            <h2>🤖 AI Spending Insights</h2>
+            <button @click="getInsights" :disabled="aiLoading" class="ai-btn">
+            {{ aiLoading ? 'Analyzing...' : 'Get Insights' }}
+            </button>
+        </div>
+        <div v-if="aiInsight" class="ai-insight">
+            <p>{{ aiInsight }}</p>
+        </div>
+    </div>
+
     <!-- Expense List -->
     <div class="expense-list">
       <h2>Expenses</h2>
@@ -102,6 +114,9 @@ const router = useRouter()
 const expenses = ref([])
 const showForm = ref(false)
 const loading = ref(false)
+
+const aiInsight = ref('')
+const aiLoading = ref(false)
 
 const form = ref({
   title: '',
@@ -146,6 +161,19 @@ const handleSubmit = async () => {
     console.error(err)
   } finally {
     loading.value = false
+  }
+}
+
+const getInsights = async () => {
+  aiLoading.value = true
+  aiInsight.value = ''
+  try {
+    const response = await api.get('/ai/insights')
+    aiInsight.value = response.data.insight
+  } catch (err) {
+    aiInsight.value = 'Could not load insights. Please try again.'
+  } finally {
+    aiLoading.value = false
   }
 }
 
@@ -194,4 +222,36 @@ input, select, textarea { width: 100%; padding: 0.75rem; border: 1px solid #ddd;
 .expense-right { display: flex; align-items: center; gap: 1rem; }
 .expense-right .amount { font-weight: bold; color: #4f46e5; }
 .delete-btn { background: #fee2e2; color: #ef4444; border: none; padding: 0.25rem 0.75rem; border-radius: 4px; cursor: pointer; }
+
+.ai-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.ai-btn {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.ai-btn:disabled {
+  opacity: 0.7;
+}
+.ai-insight {
+  background: #f5f3ff;
+  padding: 1rem;
+  border-radius: 4px;
+  border-left: 4px solid #7c3aed;
+  white-space: pre-line;
+}
 </style>
