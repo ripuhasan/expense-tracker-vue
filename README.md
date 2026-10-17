@@ -1,5 +1,35 @@
-# Vue 3 + Vite
+# Smart Expense Tracker - Frontend
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Vue.js 3 frontend for the Smart Expense Tracker application.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Tech Stack
+
+- Vue.js 3
+- Vue Router 4
+- Pinia
+- Axios
+- Vite
+
+## Setup
+
+1. Install dependencies:
+```bash
+   npm install
+```
+
+2. Start development server:
+```bash
+   npm run dev
+```
+
+3. Open http://localhost:5173
+
+## Requirements
+
+Backend Laravel server must be running at http://127.0.0.1:8000
+
+## Pages
+
+- `/login` - User login
+- `/register` - User registration  
+- `/dashboard` - Main dashboard with expenses and AI insights
